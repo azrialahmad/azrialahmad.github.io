@@ -6,25 +6,43 @@
 
 import Lightbox, { useLightbox } from './Lightbox'
 
-const streetImages = Object.values(
-  import.meta.glob('./assets/photography/street/*.{jpg,jpeg,png,webp,avif}', { eager: true, query: '?url', import: 'default' })
-)
+const streetImagesMap = import.meta.glob('./assets/photography/street/*.{jpg,jpeg,png,webp,avif}', { eager: true, query: '?url', import: 'default' })
+const streetThumbsMap = import.meta.glob('./assets/photography/street/thumbs/*.{jpg,jpeg,png,webp,avif}', { eager: true, query: '?url', import: 'default' })
 
-const cosplayImages = Object.values(
-  import.meta.glob('./assets/photography/cosplay/*.{jpg,jpeg,png,webp,avif}', { eager: true, query: '?url', import: 'default' })
-)
+const streetImages = Object.entries(streetImagesMap).map(([path, url]) => {
+  const filename = path.split('/').pop()
+  const thumbKey = `./assets/photography/street/thumbs/${filename}`
+  return {
+    full: url,
+    thumb: streetThumbsMap[thumbKey] || url
+  }
+})
+
+const cosplayImagesMap = import.meta.glob('./assets/photography/cosplay/*.{jpg,jpeg,png,webp,avif}', { eager: true, query: '?url', import: 'default' })
+const cosplayThumbsMap = import.meta.glob('./assets/photography/cosplay/thumbs/*.{jpg,jpeg,png,webp,avif}', { eager: true, query: '?url', import: 'default' })
+
+const cosplayImages = Object.entries(cosplayImagesMap).map(([path, url]) => {
+  const filename = path.split('/').pop()
+  const thumbKey = `./assets/photography/cosplay/thumbs/${filename}`
+  return {
+    full: url,
+    thumb: cosplayThumbsMap[thumbKey] || url
+  }
+})
 
 // Layout slots: define how many cells the grid expects for each subsection
 const STREET_SLOTS = [{ span: true }, {}, {}, {}, {}, {}]  // 1 large + 5 regular
 const COSPLAY_SLOTS = [{ span: true }, {}, {}, {}, {}, {}]
 
-function PhotoCell({ url, alt, span, onOpen }) {
+function PhotoCell({ image, alt, span, onOpen }) {
+  const url = image?.thumb
+  const fullUrl = image?.full
   return (
     <div
       className={`photo-placeholder${span ? ' gallery-span-2' : ''}${url ? ' photo-clickable' : ''}`}
       role="img"
       aria-label={url ? alt : 'Photo placeholder'}
-      onClick={url ? () => onOpen(url) : undefined}
+      onClick={url ? () => onOpen(fullUrl) : undefined}
       style={url ? { cursor: 'pointer' } : undefined}
     >
       {url && <img src={url} alt={alt} loading="lazy" />}
@@ -41,12 +59,12 @@ function GalleryGrid({ slots, images, altPrefix, onOpen }) {
     <>
       <div className="gallery-grid-main">
         {mainSlots.map((slot, i) => (
-          <PhotoCell key={i} url={images[i]} alt={`${altPrefix} ${i + 1}`} span={slot.span} onOpen={onOpen} />
+          <PhotoCell key={i} image={images[i]} alt={`${altPrefix} ${i + 1}`} span={slot.span} onOpen={onOpen} />
         ))}
       </div>
       <div className="gallery-grid-secondary">
         {extraSlots.map((slot, i) => (
-          <PhotoCell key={i} url={images[i + mainSlots.length]} alt={`${altPrefix} ${i + mainSlots.length + 1}`} onOpen={onOpen} />
+          <PhotoCell key={i} image={images[i + mainSlots.length]} alt={`${altPrefix} ${i + mainSlots.length + 1}`} onOpen={onOpen} />
         ))}
       </div>
     </>

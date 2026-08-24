@@ -3,7 +3,8 @@
 //
 // Supported formats: jpg, jpeg, png, webp, avif
 
-import Lightbox, { useLightbox } from './Lightbox'
+import Lightbox from './Lightbox'
+import { useLightbox } from './useLightbox'
 
 const designImagesMap = import.meta.glob('./assets/design/*.{jpg,jpeg,png,webp,avif}', { eager: true, query: '?url', import: 'default' })
 const designThumbsMap = import.meta.glob('./assets/design/thumbs/*.{jpg,jpeg,png,webp,avif}', { eager: true, query: '?url', import: 'default' })

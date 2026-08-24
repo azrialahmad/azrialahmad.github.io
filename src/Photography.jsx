@@ -4,7 +4,8 @@
 //
 // Supported formats: jpg, jpeg, png, webp, avif
 
-import Lightbox, { useLightbox } from './Lightbox'
+import Lightbox from './Lightbox'
+import { useLightbox } from './useLightbox'
 
 const streetImagesMap = import.meta.glob('./assets/photography/street/*.{jpg,jpeg,png,webp,avif}', { eager: true, query: '?url', import: 'default' })
 const streetThumbsMap = import.meta.glob('./assets/photography/street/thumbs/*.{jpg,jpeg,png,webp,avif}', { eager: true, query: '?url', import: 'default' })

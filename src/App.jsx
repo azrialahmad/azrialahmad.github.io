@@ -34,10 +34,20 @@ function useScrollReveal() {
   }, [])
 }
 
+function getInitialTheme() {
+  const stored = localStorage.getItem('portfolio-theme')
+  if (stored === 'light' || stored === 'dark') return stored
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+}
+
 function useTheme() {
   const [theme, setTheme] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('portfolio-theme') || 'light'
+    if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+      try {
+        return getInitialTheme()
+      } catch {
+        return 'light'
+      }
     }
     return 'light'
   })

@@ -1,8 +1,6 @@
-/* ─── Google Fonts ──────────────────────────────────────────────────────── */
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap');
-
 /* ─── Design Tokens ─────────────────────────────────────────────────────── */
 :root {
+  color-scheme: light;
   /* Blue palette — OKLCH for perceptual uniformity */
   --blue-900: oklch(25% 0.12 265);
   --blue-800: oklch(35% 0.16 265);
@@ -63,6 +61,7 @@
 }
 
 [data-theme="dark"] {
+  color-scheme: dark;
   --bg:           oklch(16% 0.04 265);
   --bg-secondary: oklch(20% 0.05 265);
   --text:         oklch(92% 0.02 90);

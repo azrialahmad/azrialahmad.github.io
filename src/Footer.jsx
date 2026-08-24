@@ -20,7 +20,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="mailto:your@email.com"
+                  href="mailto:azrialahmad@gmail.com"
                   aria-label="Send an email"
                 >
                   Email

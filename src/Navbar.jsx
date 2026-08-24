@@ -10,11 +10,11 @@ export default function Navbar({ theme, onToggleTheme }) {
       setScrolled(window.scrollY > 40)
 
       // Active section detection
-      const sections = ['about', 'projects', 'photography', 'design']
-      for (const id of sections.reverse()) {
-        const el = document.getElementById(id)
+      const sections = ['about', 'projects', 'publications', 'photography', 'design']
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const el = document.getElementById(sections[i])
         if (el && window.scrollY >= el.offsetTop - 120) {
-          setActiveSection(id)
+          setActiveSection(sections[i])
           break
         }
       }

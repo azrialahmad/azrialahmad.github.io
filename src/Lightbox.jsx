@@ -1,13 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
-
-export function useLightbox() {
-  const [src, setSrc] = useState(null)
-
-  const open = useCallback((url) => setSrc(url), [])
-  const close = useCallback(() => setSrc(null), [])
-
-  return { src, open, close }
-}
+import { useEffect } from 'react'
 
 export default function Lightbox({ src, onClose }) {
   useEffect(() => {

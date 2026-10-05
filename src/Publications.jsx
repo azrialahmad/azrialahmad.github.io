@@ -1,9 +1,8 @@
 export default function Publications() {
-  // TODO: Update `title` and `authors` once you confirm the exact paper title from IEEE Xplore
   const publication = {
     title: 'A Comparative Analysis of YOLOv12 Model Sizes for Road Damage Detection on an Indonesian Dataset',
-    authors: 'Azrial Ahmad Haidar Daffi Zuhri, et al.',
-    venue: '2025 International Conference on ICT, Data, and AI (ICITDA)',
+    authors: 'Azrial Ahmad Haidar Daffi Zuhri, Dhomas Hatta Fudholi, Rahadian Kurniawan, and Tisara Sita',
+    venue: '10th International Conference on Information Technology and Digital Application (ICITDA)',
     publisher: 'IEEE Xplore',
     year: '2025',
     href: 'https://ieeexplore.ieee.org/document/11332249',
@@ -58,4 +57,3 @@ export default function Publications() {
     </section>
   )
 }
-

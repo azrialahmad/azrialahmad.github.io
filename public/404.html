@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>Not found — Azrial Ahmad</title>
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg: oklch(97% 0.012 90);
+        --text: oklch(22% 0.04 265);
+        --muted: oklch(46% 0.05 265);
+        --accent: oklch(52% 0.22 265);
+        --border: oklch(87% 0.03 265);
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: oklch(17% 0.04 265);
+          --text: oklch(93% 0.02 90);
+          --muted: oklch(72% 0.04 265);
+          --accent: oklch(72% 0.14 265);
+          --border: oklch(30% 0.06 265);
+        }
+      }
+      * { box-sizing: border-box; margin: 0; }
+      body {
+        min-height: 100svh;
+        display: grid;
+        align-content: end;
+        padding: clamp(1.5rem, 6vw, 5rem);
+        background: var(--bg);
+        color: var(--text);
+        font-family: system-ui, sans-serif;
+      }
+      p.label {
+        font-size: 0.75rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+      h1 {
+        margin: 1.5rem 0 2rem;
+        font-family: 'Cormorant Garamond', Georgia, serif;
+        font-style: italic;
+        font-weight: 300;
+        font-size: clamp(3rem, 2rem + 6vw, 8rem);
+        line-height: 0.95;
+        letter-spacing: -0.02em;
+      }
+      h1 em { color: var(--accent); }
+      p.body { max-width: 32rem; color: var(--muted); line-height: 1.7; }
+      a {
+        display: inline-block;
+        margin-top: 2rem;
+        padding-bottom: 3px;
+        border-bottom: 1px solid var(--border);
+        color: var(--accent);
+        font-size: 0.85rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        text-decoration: none;
+      }
+      a:hover { border-color: var(--accent); }
+    </style>
+  </head>
+  <body>
+    <p class="label">Erratum · 404</p>
+    <h1>This page was<br /><em>never printed.</em></h1>
+    <p class="body">The address may be mistyped, or the page has moved. Everything else is in the latest issue.</p>
+    <p><a href="/">← Back to the portfolio</a></p>
+  </body>
+</html>

@@ -1,43 +1,44 @@
 import { describe, it, expect, vi } from 'vitest'
-import { render, screen, fireEvent } from '@testing-library/react'
-import Navbar from '../Navbar'
+import { render, screen, fireEvent, within } from '@testing-library/react'
+import Navbar from '../components/Navbar'
 
-const NAV_LINKS = ['About', 'Projects', 'Publications', 'Photography', 'Design']
+const SECTIONS = ['About', 'Projects', 'Publications', 'Photography', 'Design']
 
-function setup() {
+function setup(theme = 'light') {
   const onToggleTheme = vi.fn()
-  render(<Navbar theme="light" onToggleTheme={onToggleTheme} />)
+  render(<Navbar theme={theme} onToggleTheme={onToggleTheme} />)
   return { onToggleTheme }
 }
 
 describe('Navbar', () => {
-  it('renders a link for every section, including Publications', () => {
+  it('links every section to its id', () => {
     setup()
 
-    NAV_LINKS.forEach(label => {
-      expect(screen.getByRole('link', { name: label })).toBeInTheDocument()
+    const menu = screen.getByRole('list')
+    SECTIONS.forEach(label => {
+      expect(within(menu).getByRole('link', { name: new RegExp(label) })).toHaveAttribute(
+        'href',
+        `#${label.toLowerCase()}`,
+      )
     })
   })
 
-  it('links point to the matching section ids', () => {
+  it('links to the contact section', () => {
     setup()
 
-    const hrefs = NAV_LINKS.map(
-      label => screen.getByRole('link', { name: label }).getAttribute('href')
-    )
-    expect(hrefs).toEqual(
-      NAV_LINKS.map(label => `#${label.toLowerCase()}`)
-    )
+    expect(screen.getByRole('link', { name: 'Say hello' })).toHaveAttribute('href', '#contact')
   })
 
-  it('toggles the theme when the theme button is clicked', () => {
-    const { onToggleTheme } = setup()
+  it('asks for the opposite theme and passes the button as the transition origin', () => {
+    const { onToggleTheme } = setup('dark')
 
-    fireEvent.click(screen.getByRole('button', { name: 'Switch to dark mode' }))
-    expect(onToggleTheme).toHaveBeenCalledTimes(1)
+    const button = screen.getByRole('button', { name: 'Switch to light mode' })
+    fireEvent.click(button)
+
+    expect(onToggleTheme).toHaveBeenCalledWith(button)
   })
 
-  it('toggles the mobile menu and reflects aria-expanded', () => {
+  it('opens the mobile menu and closes it with Escape', () => {
     setup()
 
     const burger = screen.getByRole('button', { name: 'Toggle menu' })
@@ -45,5 +46,20 @@ describe('Navbar', () => {
 
     fireEvent.click(burger)
     expect(burger).toHaveAttribute('aria-expanded', 'true')
+    expect(document.documentElement).toHaveClass('menu-open')
+
+    fireEvent.keyDown(window, { key: 'Escape' })
+    expect(burger).toHaveAttribute('aria-expanded', 'false')
+    expect(document.documentElement).not.toHaveClass('menu-open')
+  })
+
+  it('closes the mobile menu when a link is chosen', () => {
+    setup()
+
+    const burger = screen.getByRole('button', { name: 'Toggle menu' })
+    fireEvent.click(burger)
+    fireEvent.click(within(screen.getByRole('list')).getByRole('link', { name: /Projects/ }))
+
+    expect(burger).toHaveAttribute('aria-expanded', 'false')
   })
 })

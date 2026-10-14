@@ -1,0 +1,87 @@
+/* ─── Design tokens ─────────────────────────────────────────────────────── */
+:root {
+  color-scheme: light;
+
+  /* Blue palette — OKLCH for perceptual uniformity */
+  --blue-900: oklch(25% 0.12 265);
+  --blue-800: oklch(35% 0.16 265);
+  --blue-700: oklch(45% 0.19 265);
+  --blue-600: oklch(52% 0.22 265);
+  --blue-500: oklch(58% 0.22 265);
+  --blue-400: oklch(70% 0.15 265);
+  --blue-100: oklch(92% 0.04 265);
+
+  /* Paper & ink */
+  --cream: oklch(97% 0.012 90);
+  --cream-deep: oklch(94% 0.016 90);
+  --ink: oklch(22% 0.04 265);
+  --ink-muted: oklch(46% 0.05 265);
+
+  /* Semantic — light */
+  --bg: var(--cream);
+  --bg-alt: var(--cream-deep);
+  --text: var(--ink);
+  --text-muted: var(--ink-muted);
+  --accent: var(--blue-600);
+  --accent-strong: var(--blue-700);
+  --on-accent: var(--cream);
+  --border: oklch(87% 0.03 265);
+  --border-strong: oklch(76% 0.05 265);
+
+  /* Duotone: shadows print in ink, highlights in paper */
+  --duo-ink: oklch(40% 0.2 265);
+  --duo-paper: oklch(96% 0.02 90);
+  --grain: 0.07;
+
+  /* Typography */
+  --font-display: 'Cormorant Garamond Variable', 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'DM Sans Variable', 'DM Sans', system-ui, sans-serif;
+
+  --text-xs: clamp(0.7rem, 0.66rem + 0.2vw, 0.78rem);
+  --text-sm: clamp(0.85rem, 0.8rem + 0.25vw, 0.95rem);
+  --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.1rem);
+  --text-lg: clamp(1.15rem, 1.1rem + 0.3vw, 1.3rem);
+  --text-xl: clamp(1.4rem, 1.2rem + 1vw, 2rem);
+  --text-2xl: clamp(1.8rem, 1.5rem + 2vw, 3rem);
+  --text-3xl: clamp(2.5rem, 1.8rem + 3.4vw, 5.25rem);
+
+  /* Spacing & layout */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-24: 6rem;
+  --gutter: clamp(1rem, 4vw, 2.5rem);
+  --max: 1240px;
+  --nav-h: 68px;
+  --section-y: clamp(5rem, 10vw, 9rem);
+
+  /* Motion */
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 180ms;
+  --duration-med: 320ms;
+  --duration-slow: 700ms;
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --bg: oklch(17% 0.04 265);
+  --bg-alt: oklch(20.5% 0.05 265);
+  --text: oklch(93% 0.02 90);
+  --text-muted: oklch(72% 0.04 265);
+  --accent: oklch(72% 0.14 265);
+  --accent-strong: oklch(80% 0.11 265);
+  --on-accent: oklch(17% 0.04 265);
+  --border: oklch(30% 0.06 265);
+  --border-strong: oklch(42% 0.07 265);
+
+  --duo-ink: oklch(34% 0.18 265);
+  --duo-paper: oklch(90% 0.03 90);
+  --grain: 0.05;
+}

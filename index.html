@@ -2,11 +2,28 @@
 <html lang="en" data-theme="light">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Portfolio of Azrial Ahmad Haidar Daffi Zuhri — Informatics graduate exploring Data Engineering, Machine Learning, and Web Development. Also a photographer." />
     <title>Azrial Ahmad — Portfolio</title>
+    <meta name="description" content="Portfolio of Azrial Ahmad Haidar Daffi Zuhri — Informatics graduate exploring Data Engineering, Machine Learning, and Web Development. Also a photographer." />
     <link rel="canonical" href="https://azrialahmad.is-a.dev/" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+
+    <!-- Apply the saved / preferred theme before first paint (no flash). -->
+    <script>
+      (function () {
+        var d = document.documentElement
+        d.classList.add('js')
+        try {
+          var t = localStorage.getItem('portfolio-theme')
+          if (t !== 'light' && t !== 'dark') {
+            t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+          }
+          d.setAttribute('data-theme', t)
+        } catch (e) {}
+      })()
+    </script>
+
+    <!--preload-->
 
     <!-- Open Graph -->
     <meta property="og:title" content="Azrial Ahmad — Portfolio" />
@@ -25,18 +42,22 @@
     <meta name="twitter:image" content="https://azrialahmad.is-a.dev/og-image.jpg" />
 
     <meta name="theme-color" content="#f7f5f0" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#1a1e2e" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#11152a" media="(prefers-color-scheme: dark)" />
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap"
-    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Azrial Ahmad Haidar Daffi Zuhri",
+        "url": "https://azrialahmad.is-a.dev/",
+        "sameAs": ["https://github.com/azrialahmad"],
+        "address": { "@type": "PostalAddress", "addressLocality": "Yogyakarta", "addressCountry": "ID" },
+        "knowsAbout": ["Data Engineering", "Machine Learning", "Computer Vision", "Web Development", "Photography"]
+      }
+    </script>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root"><!--app--></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

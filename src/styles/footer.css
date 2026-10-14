@@ -1,0 +1,128 @@
+/* ─── Contact / footer ──────────────────────────────────────────────────── */
+.footer {
+  padding: var(--section-y) 0 var(--space-8);
+  border-top: 1px solid var(--border);
+}
+
+.footer__title {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(2.6rem, 1.3rem + 5.4vw, 6.5rem);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+}
+
+.footer__title em {
+  color: var(--accent);
+}
+
+.footer__email {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-3) var(--space-6);
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+.footer__email a {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.4rem, 0.9rem + 2.4vw, 2.6rem);
+  line-height: 1.2;
+  color: var(--accent);
+  overflow-wrap: anywhere;
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0% 1px no-repeat;
+  transition: background-size var(--duration-slow) var(--ease-out-expo);
+}
+
+.footer__email a:hover {
+  background-size: 100% 1px;
+}
+
+.footer__grid {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+  margin-top: clamp(4rem, 9vw, 7rem);
+  padding-top: var(--space-8);
+  border-top: 1px solid var(--border);
+}
+
+.footer__name {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 300;
+  font-size: var(--text-2xl);
+  line-height: 1.05;
+}
+
+.footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+}
+
+.footer__links a {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  transition: color var(--duration-fast);
+}
+
+.footer__links a:hover {
+  color: var(--accent);
+}
+
+.footer__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-4) var(--space-8);
+  margin-top: var(--space-8);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--border);
+  font-size: var(--text-xs);
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+
+.footer__copy {
+  max-width: 44ch;
+}
+
+/* The little arc of dots — now with a slow wave running through it. */
+.dot-arc {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 24px;
+}
+
+.dot-arc span {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.55;
+  animation: bob 2.6s ease-in-out infinite;
+  animation-delay: calc(var(--i) * -0.16s);
+}
+
+.dot-arc span:nth-child(1) { translate: 0 6px; }
+.dot-arc span:nth-child(2) { translate: 0 3px; }
+.dot-arc span:nth-child(3) { translate: 0 1px; }
+.dot-arc span:nth-child(6) { translate: 0 1px; }
+.dot-arc span:nth-child(7) { translate: 0 3px; }
+.dot-arc span:nth-child(8) { translate: 0 6px; }
+.dot-arc span:nth-child(9) { translate: 0 10px; }
+.dot-arc span:nth-child(10) { translate: 0 14px; }
+
+@keyframes bob {
+  50% {
+    transform: translateY(-3px);
+    opacity: 1;
+  }
+}

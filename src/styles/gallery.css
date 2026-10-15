@@ -1,0 +1,337 @@
+/* ─── Photo series ──────────────────────────────────────────────────────── */
+.series + .series {
+  margin-top: clamp(3rem, 6vw, 5rem);
+}
+
+.series__title {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  margin-bottom: var(--space-6);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 300;
+  font-size: var(--text-2xl);
+  line-height: 1.1;
+}
+
+.series__letter,
+.series__count {
+  font-family: var(--font-body);
+  font-style: normal;
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.series__letter {
+  color: var(--accent);
+}
+
+.series__count {
+  margin-left: auto;
+  color: var(--text-muted);
+}
+
+/* Justified rows — see components/PhotoGrid.jsx */
+.justified {
+  --row: clamp(140px, 21vw, 300px);
+  --gap: clamp(4px, 0.6vw, 8px);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--gap);
+}
+
+/* Row height: the base --row, unless the whole set fits on one row — then
+   just tall enough to fill it (capped so a tiny set doesn't balloon). */
+.justified > li {
+  --fill: calc((100% - (var(--n) - 1) * var(--gap)) / var(--sum));
+  flex: var(--ar) 1 calc(var(--ar) * clamp(var(--row), var(--fill), var(--row) * 1.35));
+  aspect-ratio: var(--ar);
+  min-width: 0;
+}
+
+/* Soaks up the leftover space so the last row isn't stretched. */
+.justified::after {
+  content: '';
+  flex: 10000 1 0;
+}
+
+.photo {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  background: var(--bg-alt);
+  cursor: zoom-in;
+}
+
+.photo picture,
+.photo img {
+  width: 100%;
+  height: 100%;
+}
+
+.photo img {
+  object-fit: cover;
+  transition:
+    transform 900ms var(--ease-out-expo),
+    filter var(--duration-slow) var(--ease-out-quart);
+}
+
+.photo:hover img {
+  transform: scale(1.035);
+}
+
+.photo__num {
+  position: absolute;
+  left: var(--space-2);
+  bottom: var(--space-2);
+  z-index: 3;
+  padding: 2px 7px;
+  background: var(--bg);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text);
+  opacity: 0;
+  transform: translateY(4px);
+  transition:
+    opacity var(--duration-fast),
+    transform var(--duration-med) var(--ease-out-expo);
+}
+
+.photo:hover .photo__num,
+.photo:focus-visible .photo__num {
+  opacity: 1;
+  transform: none;
+}
+
+.photo:focus-visible {
+  outline-offset: 2px;
+}
+
+/* ─── Duotone ───────────────────────────────────────────────────────────────
+   Greyscale photo → screen the ink over it (shadows turn blue) → multiply
+   the paper over that (highlights turn cream). Only opacities and the
+   greyscale amount change, so the reveal to full colour animates smoothly. */
+.duotone {
+  --duo: 1;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.duotone img {
+  filter: grayscale(calc(var(--duo) * 100%)) contrast(calc(1 + var(--duo) * 0.1));
+  transition:
+    filter var(--duration-slow) var(--ease-out-quart),
+    transform 900ms var(--ease-out-expo);
+}
+
+.duotone::before,
+.duotone::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: var(--duo);
+  transition: opacity var(--duration-slow) var(--ease-out-quart);
+}
+
+.duotone::before {
+  z-index: 1;
+  background: var(--duo-ink);
+  mix-blend-mode: screen;
+}
+
+.duotone::after {
+  z-index: 2;
+  background: var(--duo-paper);
+  mix-blend-mode: multiply;
+}
+
+[data-tone='color'] .duotone,
+.duotone:hover,
+.duotone:focus-visible {
+  --duo: 0;
+}
+
+/* Duotone / Color switch */
+.tone-switch {
+  position: relative;
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 3px;
+  border: 1px solid var(--border-strong);
+  border-radius: 2px;
+}
+
+.tone-switch::before {
+  content: '';
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  left: 3px;
+  width: calc(50% - 3px);
+  background: var(--accent);
+  transition: transform 450ms var(--ease-out-expo);
+}
+
+.tone-switch[data-tone='color']::before {
+  transform: translateX(100%);
+}
+
+.tone-switch button {
+  position: relative;
+  padding: var(--space-2) var(--space-4);
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  transition: color var(--duration-med);
+}
+
+.tone-switch button[aria-pressed='true'] {
+  color: var(--on-accent);
+}
+
+/* ─── Lightbox ──────────────────────────────────────────────────────────── */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: clamp(1rem, 4vw, 3rem);
+  border: 0;
+  background: oklch(14% 0.035 265 / 0.97);
+  color: oklch(94% 0.02 90);
+  overflow: hidden;
+}
+
+.lightbox[open] {
+  display: grid;
+  place-items: center;
+  animation: fade-in 300ms var(--ease-out-quart);
+}
+
+.lightbox::backdrop {
+  background: transparent;
+}
+
+.lightbox__figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  max-width: 100%;
+  touch-action: pan-y;
+}
+
+.lightbox__picture img {
+  width: auto;
+  height: auto;
+  max-width: min(100%, 1600px);
+  max-height: calc(100svh - 9rem);
+  object-fit: contain;
+  animation: lightbox-in 500ms var(--ease-out-expo);
+}
+
+@keyframes lightbox-in {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+}
+
+.lightbox__caption {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-4);
+  max-width: 60ch;
+  font-size: var(--text-sm);
+  font-weight: 300;
+  line-height: 1.5;
+  color: oklch(85% 0.02 90);
+}
+
+.lightbox__count {
+  flex-shrink: 0;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.25em;
+  color: var(--blue-400);
+  font-variant-numeric: tabular-nums;
+}
+
+.lightbox__close,
+.lightbox__nav {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 1px solid oklch(100% 0 0 / 0.2);
+  border-radius: 50%;
+  background: oklch(100% 0 0 / 0.06);
+  color: inherit;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background-color var(--duration-fast),
+    border-color var(--duration-fast);
+}
+
+.lightbox__close:hover,
+.lightbox__nav:hover {
+  background: var(--blue-600);
+  border-color: var(--blue-600);
+}
+
+.lightbox__close {
+  top: var(--space-4);
+  right: var(--space-4);
+  font-size: 1.5rem;
+}
+
+.lightbox__nav {
+  top: 50%;
+  translate: 0 -50%;
+}
+
+.lightbox__nav--prev {
+  left: var(--space-4);
+}
+
+.lightbox__nav--next {
+  right: var(--space-4);
+}
+
+@media (max-width: 700px) {
+  .lightbox__nav {
+    top: auto;
+    bottom: var(--space-4);
+    translate: none;
+  }
+
+  .lightbox__picture img {
+    max-height: calc(100svh - 12rem);
+  }
+}

@@ -1,0 +1,14 @@
+/* Self-hosted variable fonts. Each file covers a unicode range, so browsers
+   only download the subsets a page actually uses (latin, here). */
+@import '@fontsource-variable/cormorant-garamond/wght.css';
+@import '@fontsource-variable/cormorant-garamond/wght-italic.css';
+@import '@fontsource-variable/dm-sans/wght.css';
+
+@import './tokens.css';
+@import './base.css';
+@import './nav.css';
+@import './hero.css';
+@import './sections.css';
+@import './figures.css';
+@import './gallery.css';
+@import './footer.css';

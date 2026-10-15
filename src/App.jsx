@@ -1,76 +1,30 @@
-import { useState, useEffect, useRef } from 'react'
-import './index.css'
-import './components.css'
+import './styles/index.css'
 
-import Navbar from './Navbar'
-import Hero from './Hero'
-import About from './About'
-import Projects from './Projects'
-import Publications from './Publications'
-import Photography from './Photography'
-import Design from './Design'
-import Footer from './Footer'
-
-
-function useScrollReveal() {
-  const observerRef = useRef(null)
-
-  useEffect(() => {
-    observerRef.current = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible')
-          }
-        })
-      },
-      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
-    )
-
-    const elements = document.querySelectorAll('.reveal')
-    elements.forEach(el => observerRef.current.observe(el))
-
-    return () => observerRef.current?.disconnect()
-  }, [])
-}
-
-function getInitialTheme() {
-  const stored = localStorage.getItem('portfolio-theme')
-  if (stored === 'light' || stored === 'dark') return stored
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-}
-
-function useTheme() {
-  const [theme, setTheme] = useState(() => {
-    if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
-      try {
-        return getInitialTheme()
-      } catch {
-        return 'light'
-      }
-    }
-    return 'light'
-  })
-
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme)
-    localStorage.setItem('portfolio-theme', theme)
-  }, [theme])
-
-  const toggle = () => setTheme(t => (t === 'light' ? 'dark' : 'light'))
-
-  return [theme, toggle]
-}
+import About from './components/About'
+import Design from './components/Design'
+import Footer from './components/Footer'
+import Hero from './components/Hero'
+import Marquee from './components/Marquee'
+import Navbar from './components/Navbar'
+import Photography from './components/Photography'
+import Projects from './components/Projects'
+import Publications from './components/Publications'
+import { useReveal } from './hooks/useReveal'
+import { useTheme } from './hooks/useTheme'
 
 export default function App() {
   const [theme, toggleTheme] = useTheme()
-  useScrollReveal()
+  useReveal()
 
   return (
     <>
+      <a className="skip-link" href="#about">
+        Skip to content
+      </a>
       <Navbar theme={theme} onToggleTheme={toggleTheme} />
       <main>
         <Hero />
+        <Marquee />
         <About />
         <Projects />
         <Publications />

@@ -1,0 +1,361 @@
+/* ─── Project figure plates (components/ProjectFigure.jsx) ──────────────── */
+.fig {
+  color: var(--accent);
+}
+
+.fig svg {
+  width: 100%;
+  height: auto;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  overflow: visible;
+}
+
+.fig figcaption {
+  margin-top: var(--space-3);
+}
+
+/* Loops sit still until the plate is on screen. */
+.reveal-ready .fig[data-play='false'] * {
+  animation-play-state: paused;
+}
+
+.fig__frame {
+  fill: none;
+  stroke: var(--border-strong);
+  stroke-width: 1;
+}
+
+.fig__meta,
+.fig__legend text {
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  fill: var(--text-muted);
+}
+
+.fig__legend text {
+  text-transform: uppercase;
+}
+
+.fig__draw {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 1.6s var(--ease-out-quart) 200ms forwards;
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Fig. 1 — aim: hit circles, approach rings, a detection box locking on */
+.fig__dash {
+  stroke-opacity: 0.45;
+  stroke-width: 1.25;
+}
+
+.fig__hit {
+  fill: color-mix(in oklch, currentColor 10%, transparent);
+  stroke: currentColor;
+  stroke-width: 1.5;
+}
+
+.fig__approach {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1;
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: 0;
+  animation: approach 3.6s linear infinite;
+  animation-delay: calc((var(--n) - 1) * 1.2s);
+}
+
+@keyframes approach {
+  0% {
+    transform: scale(2.3);
+    opacity: 0;
+  }
+  8% {
+    opacity: 0.8;
+  }
+  33% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  34%,
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+.fig__num {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 20px;
+  fill: currentColor;
+}
+
+.fig__box {
+  animation: aim-box 3.6s infinite;
+}
+
+@keyframes aim-box {
+  0%,
+  28% {
+    transform: translate(92px, 196px);
+    animation-timing-function: var(--ease-out-expo);
+  }
+  33.3%,
+  61% {
+    transform: translate(196px, 102px);
+    animation-timing-function: var(--ease-out-expo);
+  }
+  66.6%,
+  94% {
+    transform: translate(306px, 176px);
+    animation-timing-function: var(--ease-out-expo);
+  }
+  100% {
+    transform: translate(92px, 196px);
+  }
+}
+
+.fig__bracket {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+}
+
+.fig__label-bg {
+  fill: currentColor;
+}
+
+.fig__label {
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  fill: var(--bg);
+}
+
+/* Fig. 2 — composition: rule of thirds, subjects clustering, a histogram */
+.fig__thirds line {
+  stroke: currentColor;
+  stroke-opacity: 0.35;
+  stroke-dasharray: 3 4;
+}
+
+.fig__dot {
+  fill: currentColor;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pop 700ms var(--ease-out-expo) both;
+  animation-delay: calc(300ms + var(--n) * 45ms);
+}
+
+@keyframes pop {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+
+.fig__bar {
+  fill: currentColor;
+  fill-opacity: 0.7;
+  transform-box: fill-box;
+  transform-origin: bottom;
+  animation: grow 1s var(--ease-out-expo) both;
+  animation-delay: calc(700ms + var(--n) * 70ms);
+}
+
+@keyframes grow {
+  from {
+    transform: scaleY(0);
+  }
+}
+
+.fig__axis {
+  stroke: var(--border-strong);
+}
+
+/* Fig. 3 — trajectories: linear → eased → human-like with overshoot */
+.fig__line,
+.fig__legend line {
+  fill: none;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+
+.fig__line--1 {
+  stroke: var(--text-muted);
+  stroke-opacity: 0.6;
+}
+
+.fig__line--2 {
+  stroke: currentColor;
+  stroke-opacity: 0.5;
+}
+
+.fig__line--3 {
+  stroke: currentColor;
+}
+
+.fig__draw.fig__line--2 {
+  animation-delay: 650ms;
+}
+
+.fig__draw.fig__line--3 {
+  animation-delay: 1100ms;
+}
+
+.fig__start,
+.fig__goal-core {
+  fill: currentColor;
+}
+
+.fig__goal {
+  fill: none;
+  stroke: currentColor;
+  stroke-dasharray: 3 4;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: spin 14s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+.fig__cursor {
+  fill: var(--text);
+  stroke: var(--bg);
+  stroke-width: 1;
+}
+
+/* Fig — transcript: live waveform, lines writing themselves in */
+.fig__wave {
+  fill: currentColor;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: wave 900ms ease-in-out infinite alternate;
+  animation-delay: calc(var(--n) * -130ms);
+}
+
+@keyframes wave {
+  from {
+    transform: scaleY(0.25);
+  }
+}
+
+.fig__arrow {
+  fill: none;
+  stroke: var(--border-strong);
+  stroke-width: 1.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.fig__stamp {
+  font-family: var(--font-body);
+  font-size: 7.5px;
+  font-variant-numeric: tabular-nums;
+  fill: var(--text-muted);
+}
+
+.fig__text,
+.fig__bullet {
+  fill: currentColor;
+  fill-opacity: 0.55;
+}
+
+.fig__note-title {
+  fill: currentColor;
+}
+
+/* Each line appears in turn, holds, then the whole page clears and repeats. */
+.fig__line-in {
+  transform-box: fill-box;
+  transform-origin: left center;
+  animation: write-in 7s var(--ease-out-expo) infinite both;
+  animation-delay: calc(var(--n) * 380ms);
+}
+
+@keyframes write-in {
+  0% {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  8%,
+  80% {
+    transform: none;
+    opacity: 1;
+  }
+  90%,
+  100% {
+    transform: none;
+    opacity: 0;
+  }
+}
+
+/* Fig — pipeline: requests travel through governance stages */
+.fig__wire {
+  fill: none;
+  stroke: var(--border-strong);
+  stroke-width: 1.25;
+}
+
+.fig__wire--blocked {
+  stroke-dasharray: 3 4;
+}
+
+.fig__reject {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 14px;
+  fill: var(--text-muted);
+}
+
+.fig__stage {
+  fill: var(--bg);
+  stroke: currentColor;
+  stroke-width: 1.25;
+}
+
+.fig__router {
+  fill: color-mix(in oklch, currentColor 14%, var(--bg));
+}
+
+.fig__stage-label {
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  fill: var(--text);
+}
+
+.fig__packet {
+  fill: currentColor;
+  stroke: var(--bg);
+  stroke-width: 2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fig__cursor,
+  .fig__approach,
+  .fig__packet {
+    display: none;
+  }
+}
